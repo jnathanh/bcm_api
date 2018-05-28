@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_28_184659) do
+ActiveRecord::Schema.define(version: 2018_05_28_185140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 2018_05_28_184659) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_checkpoints_on_user_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.bigint "checkpoint_id"
+    t.bigint "measurement_type_id"
+    t.string "reference"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkpoint_id"], name: "index_images_on_checkpoint_id"
+    t.index ["measurement_type_id"], name: "index_images_on_measurement_type_id"
   end
 
   create_table "measurement_types", force: :cascade do |t|
@@ -54,6 +64,8 @@ ActiveRecord::Schema.define(version: 2018_05_28_184659) do
   end
 
   add_foreign_key "checkpoints", "users"
+  add_foreign_key "images", "checkpoints"
+  add_foreign_key "images", "measurement_types"
   add_foreign_key "measurements", "checkpoints"
   add_foreign_key "measurements", "measurement_types"
 end

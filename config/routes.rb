@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :images
   resources :measurements
   resources :measurement_types
   resources :checkpoints
